@@ -40,14 +40,14 @@ function createLogger (namespace, type, formatter) {
         lastNamespace = namespace;
       }
 
-      logger(chalk.gray(date), formatter(type.padStart(7).toUpperCase()), message);
+      logger(chalk.gray(date), ' ', formatter(type.padEnd(7).toUpperCase()), message);
       if (details) {
         const detailsFormatted = Object.keys(details).length < 2
           ? JSON.stringify(details)
           : JSON.stringify(details, null, 2);
 
         logger(
-          chalk.greenBright(padStartAll(date.length + 6, detailsFormatted))
+          chalk.greenBright(padStartAll(date.length + 13, detailsFormatted))
         );
       }
       return;

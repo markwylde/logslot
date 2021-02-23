@@ -46,8 +46,8 @@ test('pretty - is color coded', t => {
   logslot('one').info('this is a test');
 
   t.equal(consoleLogs[0][1], '\x1b[38;5;200;1mone                  \x1b[0m', 'should equal the correct message');
-  t.equal(consoleLogs[1][1], '\x1B[36m   INFO\x1B[39m', 'should equal the correct level');
-  t.equal(consoleLogs[1][2], 'this is a test', 'should equal the correct level');
+  t.equal(consoleLogs[1][2], '\x1B[36mINFO   \x1B[39m', 'should equal the correct level');
+  t.equal(consoleLogs[1][3], 'this is a test', 'should equal the correct level');
 });
 
 test('pretty - works', t => {
@@ -60,7 +60,7 @@ test('pretty - works', t => {
   logslot('one').info('this is a test');
 
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
-  t.equal(stripAnsi(consoleLogs[1][1]), '   INFO', 'should equal the correct level');
+  t.equal(stripAnsi(consoleLogs[1][2]), 'INFO   ', 'should equal the correct level');
 });
 
 test('pretty - works with extra', t => {
@@ -73,7 +73,7 @@ test('pretty - works with extra', t => {
   logslot('one').info('this is a test', { a: 1 });
 
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
-  t.equal(stripAnsi(consoleLogs[1][1]), '   INFO', 'should equal the correct level');
-  t.equal(stripAnsi(consoleLogs[1][2]), 'this is a test', 'should equal the correct level');
-  t.equal(stripAnsi(consoleLogs[2][0]), '                            {"a":1}', 'should include the extra detail');
+  t.equal(stripAnsi(consoleLogs[1][2]), 'INFO   ', 'should equal the correct level');
+  t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
+  t.equal(stripAnsi(consoleLogs[2][0]), '                                   {"a":1}', 'should include the extra detail');
 });
