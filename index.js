@@ -47,7 +47,7 @@ function createLogger (namespace, type, formatter) {
           : JSON.stringify(details, null, 2);
 
         logger(
-          chalk.greenBright(padStartAll(date.length + 5, detailsFormatted))
+          chalk.greenBright(padStartAll(date.length + 6, detailsFormatted))
         );
       }
       return;

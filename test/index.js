@@ -75,5 +75,5 @@ test('pretty - works with extra', t => {
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
   t.equal(stripAnsi(consoleLogs[1][1]), '   INFO', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[1][2]), 'this is a test', 'should equal the correct level');
-  t.equal(stripAnsi(consoleLogs[2][0]), '                           {"a":1}', 'should include the extra detail');
+  t.equal(stripAnsi(consoleLogs[2][0]), '                            {"a":1}', 'should include the extra detail');
 });
