@@ -13,7 +13,7 @@ logslot.setLogger(logSpy);
 function reset () {
   logslot('logging anything to set').info('the last namespace to this');
   consoleLogs = [];
-  delete process.env.SEATAXI_LOGS;
+  delete process.env.LOGSLOT_FORMAT;
 }
 
 test('json - works', t => {
@@ -41,12 +41,12 @@ test('pretty - is color coded', t => {
 
   reset();
 
-  process.env.SEATAXI_LOGS = 'pretty';
+  process.env.LOGSLOT_FORMAT = 'pretty';
 
   logslot('one').info('this is a test');
 
   t.equal(consoleLogs[0][1], '\x1b[38;5;200;1mone                  \x1b[0m', 'should equal the correct message');
-  t.equal(consoleLogs[1][1], '\x1B[36m  INFO\x1B[39m', 'should equal the correct level');
+  t.equal(consoleLogs[1][1], '\x1B[36m   INFO\x1B[39m', 'should equal the correct level');
   t.equal(consoleLogs[1][2], 'this is a test', 'should equal the correct level');
 });
 
@@ -55,12 +55,12 @@ test('pretty - works', t => {
 
   reset();
 
-  process.env.SEATAXI_LOGS = 'pretty';
+  process.env.LOGSLOT_FORMAT = 'pretty';
 
   logslot('one').info('this is a test');
 
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
-  t.equal(stripAnsi(consoleLogs[1][1]), '  INFO', 'should equal the correct level');
+  t.equal(stripAnsi(consoleLogs[1][1]), '   INFO', 'should equal the correct level');
 });
 
 test('pretty - works with extra', t => {
@@ -68,12 +68,12 @@ test('pretty - works with extra', t => {
 
   reset();
 
-  process.env.SEATAXI_LOGS = 'pretty';
+  process.env.LOGSLOT_FORMAT = 'pretty';
 
   logslot('one').info('this is a test', { a: 1 });
 
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
-  t.equal(stripAnsi(consoleLogs[1][1]), '  INFO', 'should equal the correct level');
+  t.equal(stripAnsi(consoleLogs[1][1]), '   INFO', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[1][2]), 'this is a test', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[2][0]), '                           {"a":1}', 'should include the extra detail');
 });

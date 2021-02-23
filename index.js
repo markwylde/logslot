@@ -34,13 +34,13 @@ function createLogger (namespace, type, formatter) {
   return function (message, details) {
     const date = (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString();
 
-    if (process.env.SEATAXI_LOGS === 'pretty') {
+    if (process.env.LOGSLOT_FORMAT === 'pretty') {
       if (lastNamespace !== namespace) {
         logger(chalk.gray(date), formatColor(namespace.padEnd(20)));
         lastNamespace = namespace;
       }
 
-      logger(chalk.gray(date), formatter(type.padStart(6).toUpperCase()), message);
+      logger(chalk.gray(date), formatter(type.padStart(7).toUpperCase()), message);
       if (details) {
         const detailsFormatted = Object.keys(details).length < 2
           ? JSON.stringify(details)
