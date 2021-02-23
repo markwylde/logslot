@@ -1,0 +1,32 @@
+{
+  "name": "logslot",
+  "version": "1.0.0",
+  "description": "A tiny logger that outputs json at runtime and pretty logs during development",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markwylde/logslot.git"
+  },
+  "scripts": {
+    "test": "node test"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0"
+  },
+  "devDependencies": {
+    "basictap": "^1.1.12",
+    "c8": "^6.0.1",
+    "semistandard": "^16.0.0",
+    "strip-ansi": "^6.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/markwylde/logslot/issues"
+  },
+  "homepage": "https://github.com/markwylde/logslot#readme",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": []
+}
