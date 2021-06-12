@@ -3,7 +3,9 @@ import chalk from 'chalk';
 import formatDate from './formatDate.js';
 
 let logger = console.log;
-const logLevel = (process.env.LOGSLOT_LEVEL || 'info,warn,error').split(',');
+let logFilter;
+
+const availableLogLevels = [ 'debug', 'verbose', 'info', 'warn', 'error' ];
 
 const colors = [
   20, 21, 26, 27, 32, 33, 38, 39, 40, 41, 42, 43, 44, 45, 56, 57, 62, 63, 68, 69, 74,
@@ -37,7 +39,7 @@ function createLogger (namespace, type, formatter) {
   return function (message, details) {
     const date = formatDate();
 
-    if (!logLevel.includes(type)) {
+    if (!logFilter.includes(type)) {
       return;
     }
 
@@ -78,5 +80,12 @@ function log (namespace) {
 log.setLogger = newLogger => {
   logger = newLogger;
 };
+
+log.setLogLevel = logLevel => {
+  logFilter = availableLogLevels.slice(
+    availableLogLevels.indexOf(logLevel)
+  )
+};
+log.setLogLevel(process.env.LOGSLOT_LEVEL || 'info');
 
 export default log;

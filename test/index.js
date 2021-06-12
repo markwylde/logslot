@@ -14,10 +14,35 @@ function logSpy (...args) {
 logslot.setLogger(logSpy);
 
 function reset () {
+  logslot.setLogLevel('info');
   logslot('logging anything to set').info('the last namespace to this');
   consoleLogs = [];
   delete process.env.LOGSLOT_FORMAT;
 }
+
+test('log level - default', t => {
+  t.plan(1);
+
+  reset();
+
+  logslot('one').debug('should not appear');
+  logslot('one').info('should appear');
+
+  t.equal(consoleLogs[0][0].slice(dateEndOffset), '","one","INFO","should appear"]');
+});
+
+test('log level - custom', t => {
+  t.plan(2);
+
+  reset();
+  logslot.setLogLevel('debug');
+
+  logslot('one').debug('should appear');
+  logslot('one').info('should also appear');
+
+  t.equal(consoleLogs[0][0].slice(dateEndOffset), '","one","DEBUG","should appear"]');
+  t.equal(consoleLogs[1][0].slice(dateEndOffset), '","one","INFO","should also appear"]');
+});
 
 test('json - works', t => {
   t.plan(1);
