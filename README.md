@@ -26,6 +26,18 @@ logslot('myapp.test.two').info('different namespace', { extraThings: 10 })
 ["23/02/2021 10:57:37 pm","myapp:test:two","INFO","different namespace",{"extraThings":10}]
 ```
 
+### Log level
+You can set the log level from an environment variable:
+```bash
+LOGSLOT_LEVEL=debug
+```
+
+Or with code:
+```javascript
+const logslot = require('logslot');
+logslot.setLogLevel('debug');
+```
+
 ### Output (pretty)
 ```bash
 LOGSLOT_FORMAT=pretty
