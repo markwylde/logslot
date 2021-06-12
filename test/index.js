@@ -1,7 +1,10 @@
-const test = require('basictap');
-const stripAnsi = require('strip-ansi');
+import test from 'basictap';
+import stripAnsi from 'strip-ansi';
 
-const logslot = require('../');
+import logslot from '../index.js';
+import formatDate from '../formatDate.js';
+
+const dateEndOffset = formatDate().length + 2;
 
 let consoleLogs = [];
 function logSpy (...args) {
@@ -23,7 +26,7 @@ test('json - works', t => {
 
   logslot('one').info('this is a test');
 
-  t.equal(consoleLogs[0][0].slice(24), '","one","INFO","this is a test"]');
+  t.equal(consoleLogs[0][0].slice(dateEndOffset), '","one","INFO","this is a test"]');
 });
 
 test('json - works with extra', t => {
@@ -33,7 +36,7 @@ test('json - works with extra', t => {
 
   logslot('one').info('this is a test', { a: 1 });
 
-  t.equal(consoleLogs[0][0].slice(24), '","one","INFO","this is a test",{"a":1}]');
+  t.equal(consoleLogs[0][0].slice(dateEndOffset), '","one","INFO","this is a test",{"a":1}]');
 });
 
 test('pretty - is color coded', t => {
@@ -75,5 +78,5 @@ test('pretty - works with extra', t => {
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
   t.equal(stripAnsi(consoleLogs[1][2]), 'INFO   ', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
-  t.equal(stripAnsi(consoleLogs[2][0]), '                                   {"a":1}', 'should include the extra detail');
+  t.equal(stripAnsi(consoleLogs[2][0]), '                                  {"a":1}', 'should include the extra detail');
 });

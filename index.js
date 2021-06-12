@@ -1,6 +1,9 @@
-const chalk = require('chalk');
+import chalk from 'chalk';
+
+import formatDate from './formatDate.js';
 
 let logger = console.log;
+const logLevel = (process.env.LOGSLOT_LEVEL || 'info,warn,error').split(',');
 
 const colors = [
   20, 21, 26, 27, 32, 33, 38, 39, 40, 41, 42, 43, 44, 45, 56, 57, 62, 63, 68, 69, 74,
@@ -32,7 +35,11 @@ let lastNamespace = '';
 
 function createLogger (namespace, type, formatter) {
   return function (message, details) {
-    const date = (new Date()).toLocaleDateString() + ' ' + (new Date()).toLocaleTimeString();
+    const date = formatDate();
+
+    if (!logLevel.includes(type)) {
+      return;
+    }
 
     if (process.env.LOGSLOT_FORMAT === 'pretty') {
       if (lastNamespace !== namespace) {
@@ -72,4 +79,4 @@ log.setLogger = newLogger => {
   logger = newLogger;
 };
 
-module.exports = log;
+export default log;
