@@ -9,7 +9,7 @@
     "url": "git+https://github.com/markwylde/logslot.git"
   },
   "scripts": {
-    "test": "node test"
+    "test": "c8 node test"
   },
   "author": "",
   "license": "MIT",

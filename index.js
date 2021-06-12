@@ -5,7 +5,7 @@ import formatDate from './formatDate.js';
 let logger = console.log;
 let logFilter;
 
-const availableLogLevels = [ 'debug', 'verbose', 'info', 'warn', 'error' ];
+const availableLogLevels = ['debug', 'verbose', 'info', 'warn', 'error'];
 
 const colors = [
   20, 21, 26, 27, 32, 33, 38, 39, 40, 41, 42, 43, 44, 45, 56, 57, 62, 63, 68, 69, 74,
@@ -24,7 +24,7 @@ function formatColor (namespace) {
   }
 
   const color = colors[Math.abs(hash) % colors.length];
-  const prefix = '\u001B[3' + (color < 8 ? color : '8;5;' + color);
+  const prefix = '\u001B[38;5;' + color;
 
   return `${prefix};1m${namespace} \u001B[0m`;
 }
@@ -84,7 +84,7 @@ log.setLogger = newLogger => {
 log.setLogLevel = logLevel => {
   logFilter = availableLogLevels.slice(
     availableLogLevels.indexOf(logLevel)
-  )
+  );
 };
 log.setLogLevel(process.env.LOGSLOT_LEVEL || 'info');
 
