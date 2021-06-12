@@ -1,8 +1,12 @@
 import test from 'basictap';
 import stripAnsi from 'strip-ansi';
 
+import chalk from 'chalk';
+
 import logslot from '../index.js';
 import formatDate from '../formatDate.js';
+
+chalk.level = 3;
 
 const dateEndOffset = formatDate().length + 2;
 
