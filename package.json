@@ -1,6 +1,6 @@
 {
   "name": "logslot",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "type": "module",
   "description": "A tiny logger that outputs json at runtime and pretty logs during development",
   "main": "index.js",
