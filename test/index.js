@@ -123,5 +123,5 @@ test('pretty - works with large extra', t => {
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
   t.equal(stripAnsi(consoleLogs[1][2]), 'INFO   ', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
-  t.equal(stripAnsi(consoleLogs[2][0]), `${dateEndSpaces}{\n${dateEndSpaces}  "a": 1,\n${dateEndSpaces}  "b": 2,\n${dateEndSpaces}  "c": 3,\n${dateEndSpaces}  "d": 4\n                                  }`, 'should include the extra detail');
+  t.equal(stripAnsi(consoleLogs[2][0]), `${dateEndSpaces}{\n${dateEndSpaces}  "a": 1,\n${dateEndSpaces}  "b": 2,\n${dateEndSpaces}  "c": 3,\n${dateEndSpaces}  "d": 4\n${dateEndSpaces}}`, 'should include the extra detail');
 });
