@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import replaceErrors from './replaceErrors.js';
 
 import formatDate from './formatDate.js';
 
@@ -51,19 +52,41 @@ function createLogger (namespace, type, formatter) {
 
       logger(chalk.gray(date), ' ', formatter(type.padEnd(7).toUpperCase()), message);
       if (details) {
+        const oldError = {};
+        if (details instanceof Error) {
+          const detailsFormatted = [
+            details.message,
+            details.stack
+          ].join('\n');
+
+          logger(
+            chalk.redBright(padStartAll(date.length + 13, detailsFormatted))
+          );
+
+          oldError.message = details.message;
+          oldError.stack = details.stack;
+          delete details.message;
+          delete details.stack;
+        }
+
         const detailsFormatted = Object.keys(details).length < 2
-          ? JSON.stringify(details)
-          : JSON.stringify(details, null, 2);
+          ? JSON.stringify(details, replaceErrors)
+          : JSON.stringify(details, replaceErrors, 2);
 
         logger(
           chalk.greenBright(padStartAll(date.length + 13, detailsFormatted))
         );
+
+        if (details instanceof Error) {
+          details.message = oldError.message;
+          details.stack = oldError.stack;
+        }
       }
       return;
     }
     details
-      ? logger(JSON.stringify([date, namespace, type.toUpperCase(), message, details]))
-      : logger(JSON.stringify([date, namespace, type.toUpperCase(), message]));
+      ? logger(JSON.stringify([date, namespace, type.toUpperCase(), message, details], replaceErrors))
+      : logger(JSON.stringify([date, namespace, type.toUpperCase(), message], replaceErrors));
   };
 }
 

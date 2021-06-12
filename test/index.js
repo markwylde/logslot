@@ -69,6 +69,16 @@ test('json - works with extra', t => {
   t.equal(consoleLogs[0][0].slice(dateEndOffset), '","one","INFO","this is a test",{"a":1}]');
 });
 
+test('json - works with error', t => {
+  t.plan(1);
+
+  reset();
+
+  logslot('one').info('this is a test', { a: new Error('test') });
+
+  t.ok(consoleLogs[0][0].includes('"stack":"Error: test\\n    at file'), 'includes error');
+});
+
 test('pretty - is color coded', t => {
   t.plan(3);
 
@@ -124,4 +134,36 @@ test('pretty - works with large extra', t => {
   t.equal(stripAnsi(consoleLogs[1][2]), 'INFO   ', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[2][0]), `${dateEndSpaces}{\n${dateEndSpaces}  "a": 1,\n${dateEndSpaces}  "b": 2,\n${dateEndSpaces}  "c": 3,\n${dateEndSpaces}  "d": 4\n${dateEndSpaces}}`, 'should include the extra detail');
+});
+
+test('pretty - works with property of error', t => {
+  t.plan(4);
+
+  reset();
+
+  process.env.LOGSLOT_FORMAT = 'pretty';
+
+  logslot('one').error('this is a test', { a: new Error('test') });
+
+  t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
+  t.equal(stripAnsi(consoleLogs[1][2]), 'ERROR  ', 'should equal the correct level');
+  t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
+  t.ok(stripAnsi(consoleLogs[2][0]).includes('"stack":"Error: test\\n    at file'), 'includes error');
+});
+
+test('pretty - works with direct error', t => {
+  t.plan(6);
+
+  reset();
+
+  process.env.LOGSLOT_FORMAT = 'pretty';
+
+  logslot('one').error('this is a test', new Error('test'));
+
+  t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
+  t.equal(stripAnsi(consoleLogs[1][2]), 'ERROR  ', 'should equal the correct level');
+  t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
+  t.ok(stripAnsi(consoleLogs[2][0]).includes('  test'), 'includes error message');
+  t.ok(stripAnsi(consoleLogs[2][0]).includes('  Error: test'), 'includes error stack');
+  t.ok(stripAnsi(consoleLogs[2][0]).includes('  at file:'), 'includes at least one stack line');
 });
