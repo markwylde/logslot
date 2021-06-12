@@ -9,6 +9,7 @@ import formatDate from '../formatDate.js';
 chalk.level = 3;
 
 const dateEndOffset = formatDate().length + 2;
+const dateEndSpaces = Array(dateEndOffset + 12).fill('').join(' ');
 
 let consoleLogs = [];
 function logSpy (...args) {
@@ -107,7 +108,7 @@ test('pretty - works with extra', t => {
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
   t.equal(stripAnsi(consoleLogs[1][2]), 'INFO   ', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
-  t.equal(stripAnsi(consoleLogs[2][0]), '                                  {"a":1}', 'should include the extra detail');
+  t.equal(stripAnsi(consoleLogs[2][0]), `${dateEndSpaces}{"a":1}`, 'should include the extra detail');
 });
 
 test('pretty - works with large extra', t => {
@@ -122,5 +123,5 @@ test('pretty - works with large extra', t => {
   t.equal(stripAnsi(consoleLogs[0][1]), 'one                  ', 'should equal the correct message');
   t.equal(stripAnsi(consoleLogs[1][2]), 'INFO   ', 'should equal the correct level');
   t.equal(stripAnsi(consoleLogs[1][3]), 'this is a test', 'should equal the correct level');
-  t.equal(stripAnsi(consoleLogs[2][0]), '                                  {\n                                    "a": 1,\n                                    "b": 2,\n                                    "c": 3,\n                                    "d": 4\n                                  }', 'should include the extra detail');
+  t.equal(stripAnsi(consoleLogs[2][0]), `${dateEndSpaces}{\n${dateEndSpaces}  "a": 1,\n${dateEndSpaces}  "b": 2,\n${dateEndSpaces}  "c": 3,\n${dateEndSpaces}  "d": 4\n                                  }`, 'should include the extra detail');
 });
