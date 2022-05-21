@@ -14,13 +14,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.1"
+    "chalk": "^5.0.1"
   },
   "devDependencies": {
-    "basictap": "^1.1.13",
-    "c8": "^7.7.2",
-    "semistandard": "^16.0.0",
-    "strip-ansi": "^7.0.0"
+    "basictap": "^3.2.3",
+    "c8": "^7.11.3",
+    "semistandard": "^16.0.1",
+    "strip-ansi": "^7.0.1"
   },
   "bugs": {
     "url": "https://github.com/markwylde/logslot/issues"
